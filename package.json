@@ -1,0 +1,34 @@
+{
+  "name": "vite-plugin-dev-manifest",
+  "version": "1.0.0",
+  "description": "Vite plugin for generating manifest during dev server",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "build": "tsc",
+    "prepare": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/owlsdepartment/vite-plugin-wordpress.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/owlsdepartment/vite-plugin-wordpress/issues"
+  },
+  "homepage": "https://github.com/owlsdepartment/vite-plugin-wordpress#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.8",
+    "typescript": "^4.5.4",
+    "vite": "^2.7.10"
+  },
+  "peerDependencies": {
+    "vite": "^2.7.0"
+  }
+}
