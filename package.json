@@ -16,8 +16,8 @@
     "type": "git",
     "url": "git+https://github.com/owlsdepartment/vite-plugin-dev-manifest.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Miłosz Mandowski",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/owlsdepartment/vite-plugin-dev-manifest/issues"
   },
