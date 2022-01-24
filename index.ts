@@ -14,7 +14,7 @@ export interface PluginManifest {
     }
 }
 
-const MANIFEST_NAME = 'manifest.dev.json';
+const MANIFEST_NAME = 'manifest.dev';
 
 const createSimplifyPath = (root: string, base: string) => (path: string) => {
 	if (root !== '/' && path.startsWith(root)) {
