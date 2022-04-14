@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import path from 'path';
-import { Plugin } from 'vite';
+import { Plugin, normalizePath } from 'vite';
 
 export interface ManifestPluginConfig {
 	omitInputs?: string[];
@@ -47,7 +47,8 @@ const plugin = ({ omitInputs = [], manifestName = MANIFEST_NAME }: ManifestPlugi
 		}
 
 		httpServer?.once('listening', () => {
-			const { root, base } = config;
+			const { root: _root, base } = config;
+			const root = normalizePath(_root);
 			const protocol = config.server.https ? 'https' : 'http';
 			const host = config.server.host || 'localhost';
 			const port = config.server.port;
