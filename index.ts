@@ -17,12 +17,10 @@ export interface PluginManifest {
 const MANIFEST_NAME = 'manifest.dev';
 
 const createSimplifyPath = (root: string, base: string) => (path: string) => {
+	path = normalizePath(path);
+
 	if (root !== '/' && path.startsWith(root)) {
 		path = path.slice(root.length);
-
-		if (path[0] !== '/') {
-			path = `/${path}`;
-		}
 	}
 
 	if (path.startsWith(base)) {
