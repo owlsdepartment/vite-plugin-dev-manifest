@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-dev-manifest",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Vite plugin for generating manifest during dev server",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
