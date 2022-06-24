@@ -1,4 +1,4 @@
-import os from 'node:os';
+import os from 'os';
 
 /**
  * Resolve host if is passed as `true`
