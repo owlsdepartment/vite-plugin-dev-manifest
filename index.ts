@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import path from 'path';
 import { Plugin, normalizePath } from 'vite';
+import { resolveHost } from './resolveHost'
 
 export interface ManifestPluginConfig {
 	omitInputs?: string[];
@@ -48,7 +49,7 @@ const plugin = ({ omitInputs = [], manifestName = MANIFEST_NAME }: ManifestPlugi
 			const { root: _root, base } = config;
 			const root = normalizePath(_root);
 			const protocol = config.server.https ? 'https' : 'http';
-			const host = config.server.host || 'localhost';
+			const host = resolveHost(config.server.host);
 			const port = config.server.port;
 			const url = `${protocol}://${host}:${port}${base}`;
 			const manifest: PluginManifest = {
