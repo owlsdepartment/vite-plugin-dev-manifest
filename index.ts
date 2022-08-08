@@ -77,8 +77,9 @@ const plugin = ({ omitInputs = [], manifestName = MANIFEST_NAME }: ManifestPlugi
 				}
 			}
 
-			mkdirSync(config.build.outDir, { recursive: true });
-			writeFileSync(path.resolve(config.build.outDir, `${manifestName}.json`), JSON.stringify(manifest, null, '\t'));
+			const outputDir = path.resolve(config.root, config.build.outDir);
+			mkdirSync(outputDir, { recursive: true });
+			writeFileSync(path.resolve(outputDir, `${manifestName}.json`), JSON.stringify(manifest, null, '\t'));
 		});
 	},
 });
