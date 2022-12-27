@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import path from 'path';
 import { Plugin, normalizePath } from 'vite';
 import { resolveHost } from './resolveHost'
@@ -6,6 +6,7 @@ import { resolveHost } from './resolveHost'
 export interface ManifestPluginConfig {
 	omitInputs?: string[];
     manifestName?: string;
+	delay?: number;
 }
 
 export interface PluginManifest {
@@ -35,8 +36,9 @@ const createSimplifyPath = (root: string, base: string) => (path: string) => {
 	return path;
 };
 
-const plugin = ({ omitInputs = [], manifestName = MANIFEST_NAME }: ManifestPluginConfig = {}): Plugin => ({
+const plugin = ({ omitInputs = [], manifestName = MANIFEST_NAME, delay }: ManifestPluginConfig = {}): Plugin => ({
 	name: 'dev-manifest',
+	enforce: 'post',
 
 	configureServer(server) {
 		const { config, httpServer } = server;
@@ -81,8 +83,19 @@ const plugin = ({ omitInputs = [], manifestName = MANIFEST_NAME }: ManifestPlugi
 				? config.build.outDir
 				: path.resolve(config.root, config.build.outDir);
 
-			mkdirSync(outputDir, { recursive: true });
-			writeFileSync(path.resolve(outputDir, `${manifestName}.json`), JSON.stringify(manifest, null, '\t'));
+			if (!existsSync(outputDir)) {
+				mkdirSync(outputDir, { recursive: true });
+			}
+
+			const writeManifest = () => {
+				writeFileSync(path.resolve(outputDir, `${manifestName}.json`), JSON.stringify(manifest, null, '\t'));
+			}
+
+			if (delay !== undefined && typeof delay === 'number') {
+				setTimeout(() => writeManifest(), delay);
+			} else {
+				writeManifest();
+			}
 		});
 	},
 });

@@ -64,12 +64,17 @@ Based on our example, it would be: `http://localhost:3000/src/main.ts`
 
 __NOTE:__ In manifest file, `inputs` field is always an object with a keys and values, even if `rollupOptions.input` is string or an array
 
+## Plugin ordering
+
+`vite-plugin-dev-manifest` forces itself to be registered in later stages, but if more plugins uses `enforce: post`, it may be needed to order this plugin as the last one, f. ex.: when using along [`vite-plugin-symfony`](https://github.com/lhapaipai/vite-plugin-symfony).
+
 ## Config
 
 | Name | Type | Default | Description |
 | -- | -- | -- | -- |
 | `manifestName` | `string` | `manifest.dev` | name of the generated manifest file in dist folder |
 | `omitInputs` | `string[]` | `[]` | inputs to omit in generated manifest. It is useful when you want to build some styles or scripts, but not include it in your front app |
+| `delay` | `number` | `undefined` | you can delay creating of the manifest file if any of the plugins clears `dist` folder |
 
 ## Tips
 
