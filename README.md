@@ -31,6 +31,9 @@ export default defineConfig({
     // ...
 
     build: {
+        // required to create a manifest file
+        manifest: true,
+
         rollupOptions: {
             // specify your input files here, as stated in Vite config https://vitejs.dev/config/#build-rollupoptions
             input: 'src/main.ts'
@@ -75,6 +78,7 @@ __NOTE:__ In manifest file, `inputs` field is always an object with a keys and v
 | `manifestName` | `string` | `manifest.dev` | name of the generated manifest file in dist folder |
 | `omitInputs` | `string[]` | `[]` | inputs to omit in generated manifest. It is useful when you want to build some styles or scripts, but not include it in your front app |
 | `delay` | `number` | `undefined` | you can delay creating of the manifest file if any of the plugins clears `dist` folder |
+| `clearOnClose` | `boolean` | `true` | since version `1.2.0` manifest file is being removed, when dev server is closed. To prevent this behaviour, set this flag to `false` |
 
 ## Tips
 

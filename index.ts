@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, writeFileSync, rmSync } from 'fs';
 import path from 'path';
 import { Plugin, normalizePath } from 'vite';
 import { resolveHost } from './resolveHost'
@@ -7,6 +7,7 @@ export interface ManifestPluginConfig {
 	omitInputs?: string[];
     manifestName?: string;
 	delay?: number;
+	clearOnClose?: boolean
 }
 
 export interface PluginManifest {
@@ -36,7 +37,7 @@ const createSimplifyPath = (root: string, base: string) => (path: string) => {
 	return path;
 };
 
-const plugin = ({ omitInputs = [], manifestName = MANIFEST_NAME, delay }: ManifestPluginConfig = {}): Plugin => ({
+const plugin = ({ omitInputs = [], manifestName = MANIFEST_NAME, delay, clearOnClose = true }: ManifestPluginConfig = {}): Plugin => ({
 	name: 'dev-manifest',
 	enforce: 'post',
 
@@ -97,7 +98,18 @@ const plugin = ({ omitInputs = [], manifestName = MANIFEST_NAME, delay }: Manife
 				writeManifest();
 			}
 		});
-	},
+
+		httpServer?.once('close', () => {
+			if (!clearOnClose) return;
+
+			const outputDir = path.isAbsolute(config.build.outDir)
+				? config.build.outDir
+				: path.resolve(config.root, config.build.outDir);
+			const manifestPath = path.resolve(outputDir, `${manifestName}.json`)
+
+			if (existsSync(manifestPath)) rmSync(manifestPath)
+		})
+	}
 });
 
 export default plugin;
