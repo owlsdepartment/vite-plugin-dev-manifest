@@ -1,5 +1,5 @@
 import esbuild from 'rollup-plugin-esbuild'
-import dts from 'rollup-plugin-dts'
+import { dts } from 'rollup-plugin-dts'
 import { defineConfig } from 'rollup';
 
 type FormatType = 'dts' | 'cjs' | 'esm';
